@@ -1,6 +1,6 @@
 ---
 title: en
-permalink: /
+permalink: /en
 ---
 
 <html>
