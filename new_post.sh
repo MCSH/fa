@@ -7,11 +7,11 @@ p(){
     echo $@ >> $NAME
 }
 
-p ----
+p ---
 p title: $1
 p date: $(date -Is | awk 'gsub("T", " ")' | awk 'gsub("+", " +")') 
 p categories: 
-p ----
+p ---
 p some text
 p
 p "{% highlight python %}"
