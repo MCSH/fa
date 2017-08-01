@@ -11,6 +11,7 @@ p ---
 p title: $1
 p date: $(date -Is | awk 'gsub("T", " ")' | awk 'gsub("+", " +")') 
 p categories: 
+p comment: https://github.com/MCSH/MCSH.github.io/issues/
 p ---
 p some text
 p
