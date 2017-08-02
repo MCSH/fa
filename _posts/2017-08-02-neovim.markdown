@@ -209,4 +209,7 @@ let g:airline_theme='dark'
 
 حال کافیست پس از بارگزاری مجدد نئوویم دستور :PlugInstall را اجرا کنیم تا پلاگین هایمان نصب شوند. 
 
+تغییرات را می‌توانید در کامیت زیر ببینید:
+https://github.com/MCSH/dot-files/commit/ecb7fbd39db8105c6f402646358643177945fcdf
+
 در پست های بعدی autocomplete را به نئوویم اضافه می‌کنیم.
