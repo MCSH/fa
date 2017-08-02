@@ -1,0 +1,212 @@
+---
+title: neovim
+date: 2017-08-02 15:46:23 +04:30
+categories:
+comment: https://github.com/MCSH/MCSH.github.io/issues/8
+---
+
+نئوویم یکی از ادیتور هایی است که بر مبنای vim پیاده سازی شده است با هدف رفع محدودیت های vim. این ادیتور قابلیت های زیادی دارد از جمله اجرا کردن ترمینال درون خود، نوشتن پلاگین با هر زبان برنامه‌نویسی برایش و ... در این پست قصد دارم تا ادیتور را از صفر تنظیم کنم.
+
+فایل تنظیمات نئوویم در آدرس `~/.config/nvim/` است. این پوشه را در پوشه dot-files خود می‌سازم.
+
+```
+[master][~/src/git/dot-files]$ mkdir .config/nvim -p
+```
+
+و آن را به فایل setup اضافه می‌کنم. فایل اصلی تنظیمات init.vim نام دارد. آن را باز کرده و تنظیمات را خط به خط اضافه می‌کنم. در ابتدا برای راحتی کلیپ‌برد دیفالت را unnamedplus میگذارم که همان کلیپ‌برد X است. 
+
+```
+"install xclip for clipboard support
+"No need to "+ for copy pasting
+set clipboard+=unnamedplus
+```
+
+بدون وجود این دو خط برای کپی کردن باید پس از انتخاب 
+
+```
+"+y
+```
+و برای پیست کردن باید
+
+```
+"+p
+```
+
+را استفاده می‌کردیم اما الآن دکمه های p و y به تنهایی کافیست. در گام بعدی می‌خواهیم خروج موقت از ترمینال را با کلید Esc انجام دهیم. این کلید به صورت دیفالت کنترل \ و سپس کنترل n است. برای اینکار کافیست کلید Esc را در مود ترمینال به آن مپ کنیم.
+
+```
+"Terminal normal mode with Esc:
+:tnoremap <Esc> <C-\><C-n>
+```
+
+دستوری که مپ کرده tnoremap است، آن را بخوانید t(erminal) no remap یعنی در مود ترمینال کلید Esc را به <C-\><C-n> مپ کن اما اگر خود آن کلید ها به چیز دیگری مپ شده بودند به آن توجه نکن! این کار برای این است که تنظیمات بعدی اثری روی این دستور نگذارند. در گام بعدی ست کردن اندازه تب و تبدیل تب به اسپیس را انجام می‌دهم:
+
+```
+"Set tab to 4 spaces:
+set shiftwidth=4
+set expandtab
+```
+
+و پس از آن syntax highlight را روشن می‌کنم:
+
+```
+"Enable syntax highlighting:
+syntax enable
+```
+
+در مرحله بعدی نمایش شماره خط را روشن می‌کنیم. نمایش خط با دو متغییر `number` و  `relativenumber` کنترل می‌شود. متغییر ها را می‌توان با set مقدار ۱ به آن‌ها داد و برای صفر کردنشان کافیست `nonumber` و `norelativenumber` را ست کنیم.  این دو متغییر ۴ حالت دارند:
+
+* حالت nonumber, norelativenumber که پایه است و در آن هیچ شماره خطی نمایش داده نمی‌شود.
+* حالت number, norelativenumber که در آن شماره خط نمایش داده می‌شود.
+* حالت nonumber, relativenumber که در آن شماره خط با توجه به محل اشاره‌گر بیان می‌شود (خطی که اشاره‌گر در آن است شماره واقعی و باقی خط ها فاصله شان)
+* حالت number, relativenumber با توجه به این که کدام یکی از این دو دیرتر ست شده‌اند یکی از دو حالت فوق اعمال می‌شود. من ترجیح می‌دهم ادیتور با number آغاز شود و درصورت نیاز به سادگی به relativenumber تغییر حالت دهم. برای این کار ابتدا number را مشخص می‌کنم.
+
+```
+"Line Numbers
+set number
+```
+
+سپس تابع `NumberToggle` را به صورت زیر تعریف می‌کنم:
+
+```
+function! NumberToggle()
+    if(&relativenumber == 1)
+        set norelativenumber
+    else
+        set relativenumber
+    endif
+endfunc
+```
+
+و کلید F2 را به آن مپ می کنم:
+
+```
+nnoremap <F2> :call NumberToggle()<cr>
+```
+
+سپس برای نمایش پرانتز های هماهنگ از خط زیر استفاده می‌کنم:
+
+```
+"highlight matching bracket when a new one is inserted
+set showmatch
+```
+
+و برای استفاده از action های مرتبط با فایل از سه خط کد زیر:
+
+```
+"detect specific actions for specific filetypes
+filetype on
+filetype indent on
+filetype plugin on
+```
+
+سپس ساختار status line، خط پایین صفحه را مشخص می‌کنم:
+
+```
+"set status line
+set statusline=   " clear the statusline for when vimrc is reloaded
+set statusline+=%-3.3n\                      " buffer number
+set statusline+=%f\                          " file name
+set statusline+=%h%m%r%w                     " flags
+set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
+set statusline+=%{strlen(&fenc)?&fenc:&enc}, " encoding
+set statusline+=%{&fileformat}]              " file format
+set statusline+=%=                           " right align
+set statusline+=%b,0x%-8B\                   " current char
+set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset
+```
+
+سپس ویرایش با موس را فعال می‌کنیم:
+```
+" Use mouse
+set mouse=a
+```
+
+می‌خواهیم هنگام تقسیم صفحه عمودی صفحه جدید در پایین ظاهر شود و هنگام تقسیم افقی صفحه جدید در سمت راست. برای این کار دو خط زیر را نیز اضافه می‌کنیم:
+
+```
+" More natural splits
+set splitbelow
+set splitright
+```
+
+در ادامه تنظیمات مرتبط با جستوجو را اضافه می‌کنیم. جستوجو باید موارد یافت شده را هایلایت کند، تا زمانی که حروف بزرگ (مانند A) تایپ نشده در جستوجو بزرگی و کوچکی حروف را در نظر نگیرد و همزمان با تایپ کردن من به دنبال موارد یافت شده بگردد. در نهایت برای اعمال regex ها باید فلگ g را به صورت دیفالت در نظر بگیرد.
+
+```
+" Search stuff
+set hlsearch            " Highlight search results.
+set ignorecase          " Make searching case insensitive
+set smartcase           " ... unless the query has capital letters.
+set incsearch           " Incremental search.
+set gdefault            " Use 'g' flag by default with :s/foo/bar/.
+set magic               " Use 'magic' patterns (extended regular expressions).
+```
+
+اما پس از سرچ کردن نیاز به ابزاری دارم تا هایلایت ها را پاک کند، برای این منظور از شورتکات زیر استفاده می‌کنم:
+
+```
+" Use C-L to clear search highlights
+nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
+```
+
+تا اینجا تنظیمات پایه neovim را انجام دادیم، حال نیاز به استفاده از پلاگین های متفاوت داریم. برای مدیریت پلاگین های خود از vim-plug استفاده می‌کنم.
+
+```
+curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+```
+
+سپس به vim-plug می‌گوییم پلاگین ها را در پوشه خودش قرار دهد. محتویات این پوشه را درون .gitignore قرار می‌دهیم.
+
+```
+call plug#begin('~/.config/nvim/plugged')
+call plug#end()
+```
+
+در فضای بین دو خط فوق دستور های Plug را قرار می‌دهیم و پس از plug#end تنظیمات آن‌ها را قرار می‌دهیم. در ابتدا دو پلاگین nerdtree و vim-nerdtree-tabs را نصب می کنم:
+
+```
+Plug 'scrooloose/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs'
+```
+
+سپس F3 را برابر با تاگل برای nerdtree قرار می‌دهیم.
+
+```
+"Map F3 to toggle NERDTree
+nmap <F3> <plug>NERDTreeTabsToggle<cr>
+```
+
+همچنین می‌خواهیم یک سری از فایل ها در NERDTree ظاهر نشوند، برای این کار آن ها را در آرایه زیر قرار می‌دهیم:
+
+```
+"Disable .pyc files in NERDTree
+let NERDTreeIgnore=['\.pyc$', '\~$']
+```
+
+اگر خاطرتان باشد در ابتدا یکی از کار هایی که کردیم ست کردن کلید تب به ۴ اسپیس بود. این فرایند برای make file ها دردسر ساز خوهد بود. برای رفع این مشکل تابع زیر را تعریف می‌کنیم:
+
+```
+function MakeFile_setting()
+    setlocal shiftwidth=8
+    setlocal noexpandtab
+endfunc
+```
+
+در نهایت برای زیبایی بیشتر از vim-arline استفاده می‌کنیم:
+```
+Plug 'vim-airline/vim-airline'
+```
+و تنظیمات زیر را اعمال می‌کنیم:
+
+```
+"Airline themes
+let g:airline_powerline_fonts = 1
+let g:airline_theme='dark'
+```
+
+
+
+حال کافیست پس از بارگزاری مجدد نئوویم دستور :PlugInstall را اجرا کنیم تا پلاگین هایمان نصب شوند. 
+
+در پست های بعدی autocomplete را به نئوویم اضافه می‌کنیم.
