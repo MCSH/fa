@@ -9,14 +9,13 @@ comment: https://github.com/MCSH/MCSH.github.io/issues/9
 
 برای بررسی کردن این پروژه از کامیت ها شروع می‌کنیم:
 ```
-
-```
 $ glog
 * 9e10150 (HEAD -> master, origin/master, origin/HEAD) tried to follow Unix philosophy because friends asked :)
 * 1d5bb9f changed the app from executing terminal commands to calling pip function
 * d4ce709 app source added
 * 90b7697 Initial commit
 ```
+
 #کامیت اول
 ۴ کامیت مختلف. [کامیت اول](https://github.com/Alimirlou/pip-upgrade-all/commit/90b769742c1d5b7e57ccc72640e1b08448a2cbba) صرفا یک فایل README.md ساده تولید کرده. چیزی برای بررسی نیست.
 
