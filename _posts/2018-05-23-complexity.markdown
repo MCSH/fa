@@ -1,7 +1,7 @@
 ---
 title: مقدمه‌ای بر نظریه محاسبه
 date: 2018-05-23 16:55:26 +04:30
-categories: علوم کامپیوتر
+categories: cs
 comment: https://github.com/MCSH/MCSH.github.io/issues/13
 ---
 
