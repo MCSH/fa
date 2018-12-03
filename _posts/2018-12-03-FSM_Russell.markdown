@@ -1,5 +1,5 @@
 ---
-title: به بهانه هیولای اسپاگتی: راسل
+title: به بهانه هیولای اسپاگتی - راسل
 date: 2018-12-03 19:55:57 +03:30
 categories: god logic
 comment: https://github.com/MCSH/MCSH.github.io/issues/17
@@ -74,6 +74,7 @@ comment: https://github.com/MCSH/MCSH.github.io/issues/17
 
 همونطور که می‌تونید ببینید، تمامی این فرمان‌ها حالت شوخی دارند و همه شان با عبارت «من واقعا ترجیح میدم شما...»‌شروع می‌شه، تاکید بر آزادی عمل افراد و این که دستوری وجود نداره.
 
+----
 
 [^1]: Bertrand Russell
 [^2]: Atheism
