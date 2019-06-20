@@ -23,4 +23,4 @@ comment: https://github.com/MCSH/MCSH.github.io/issues/22
 *  عدم وابستگی به یک هاست
 * ایجاد مکانیزم برای جلوگیری از حمله اسپمرها
 
-برای بحث بیشتر به t.me/pi_developer_discuss مراجعه کنید.
+برای بحث بیشتر به [@pi_developer_discuss](http://t.me/pi_developer_discuss) مراجعه کنید.
